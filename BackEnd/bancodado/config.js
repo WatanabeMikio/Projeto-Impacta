@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://Mikio:sukifuton26@projetoimpacta.bvufobp.mongodb.net/projetobacken?retryWrites=true&w=majority",{},(error)=>{
-  if (error){
-    console.log("falha na conexão ao mongobd");
+async function main(){
+
+  try{
+    await mongoose.connect("mongodb+srv://Mikio:sukifuton26@projetoimpacta.bvufobp.mongodb.net/?retryWrites=true&w=majority");
+
+    console.log("conexão com o Banco Estavel");
+  }
+  catch (error) {
     console.log(error);
-    return;
   }
 
-  console.log('conexão estavel');
-});
+  
+}
 
 
-mongoose.Promise = global.Promise;
-module.exports = mongoose;
+
+module.exports = main;
