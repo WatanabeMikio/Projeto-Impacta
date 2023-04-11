@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("../database");
 
 
 const UserSchema = new mongoose.Schema({
@@ -12,14 +12,18 @@ const UserSchema = new mongoose.Schema({
       unique: true,
       lowercase: true,
     },
-    senha:{
+    password:{
       type: String,
       required: true,
       select: false,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
     }
     
 });
 
-const usuario = mongoose.model("usuario", UserSchema);
+const User = mongoose.model("User", UserSchema);
 
-module.exports = usuario;
+module.exports = User;

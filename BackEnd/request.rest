@@ -1,9 +1,0 @@
-post http://localhost:3030/alt/registro
-
-Content-Type: application/json
-
-{
-  "name": "teste",
-  "email": "olá@gmail.com",
-  "senha": "123"
-}
