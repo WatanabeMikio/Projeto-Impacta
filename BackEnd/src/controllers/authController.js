@@ -4,8 +4,16 @@ const User = require('../models/User');
 const router = express.Router();
 
 router.post ('/register', async (req, res) => {
+
+   const {email} = req.body;
+
    try {
+      if (await User.findOne( { email }))
+         return res.status(400).send({error: 'Email de usuario já cadastrado'});
+
     const user = await User.create(req.body);
+
+    user.password = undefined;
 
      return res.send({ user });
    }
@@ -14,7 +22,26 @@ router.post ('/register', async (req, res) => {
     return res.status(400).send({ error: 'Falha ao Registrar'});
     
    }
+   
+});
+router.delete('/delete', async(req,res) => {
+
+   const { email } = req.body;
+
+   try{
+
+      if (await User.deleteOne( { email }))
+         return res.status(200).send('Usuario deletado com sucesso');
+         
+
+   const user = await User.delete(req.body);
+
+      return res.send({ user });
+
+   }
+   catch(err){
+      return res.status(400).send({error: 'Falha ao deletar usuario'});
+   }
 });
 
 module.exports = app => app.use('/auth', router);
-
