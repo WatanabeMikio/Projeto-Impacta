@@ -1,22 +1,49 @@
-
+import React, { useState } from "react";
 import './App.css';
+import Axios from "axios";
+
+
 
 function App() {
+
+  const [values, setValues] = useState();
+  
+  const alterarValores = (value) => {
+    setValues(valorAnterior => ({
+      ...valorAnterior,
+      [value.target.name]: value.target.value,
+    }));
+  };
+
+  const createClickButton = () => {
+      Axios.post(`http://localhost:3001/auth/register`,{
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    }).then ((response) => {
+      console.log(response);
+      alert(response.data.message);
+    });
+    };
+
+   
   return (
     <div className="app--container">
       <div className = "register--container">
       <h2>Cadastro de Usuario</h2>
-      <label>Nome</label>
+      <label>nome</label>
       <input type="text" 
             name ="name" 
-            placeholder="Digite o nome do Usuario" required/>
+            placeholder="Digite o nome do Usuario" required
+            onChange={alterarValores}/>
 
       <br></br>     
 
-      <label>Email</label>
+      <label>email</label>
       <input type="email" 
             name ="email"
-            placeholder="Digite o e-mail do Usuario" required/>
+            placeholder="Digite o e-mail do Usuario" required
+            onChange={alterarValores}/>
 
       <br></br>     
     
@@ -24,11 +51,13 @@ function App() {
       <input type="text"
            name="password"
            placeholder="Digite o password" 
-           required/>
+           required
+           onChange={alterarValores}/>
       <br></br>     
            
-      <button type="submit">Enviar</button>
+      <button className="register--buttton" onClick={() => createClickButton()}>Enviar</button>
 
+            
       </div>
       
     </div>
