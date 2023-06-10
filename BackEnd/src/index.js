@@ -11,5 +11,6 @@ app.use(cors({origin: 'http://localhost:3000'
 }));
 
 require('./controllers/authController')(app);
+require('./controllers/produtoController')(app);
 
 app.listen(3001);
